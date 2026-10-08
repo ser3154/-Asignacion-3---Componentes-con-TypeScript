@@ -1,0 +1,39 @@
+:host{
+    display: block;
+}
+
+table{
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+    border: 1px solid var(--color-linea, #e5e7eb);
+    border-radius: var(--radio, 12px);
+    overflow: hidden;
+}
+
+th,
+td{
+    padding: 12px 16px;
+    text-align: left;
+    border-bottom: 1px solid var(--color-linea, #e5e7eb);
+}
+
+th{
+    background: var(--color-azul, #0066cc);
+    color: #fff;
+    font-weight: 600;
+}
+
+tbody tr:last-child td{
+    border-bottom: none;
+}
+
+.vacio{
+    padding: 24px;
+    text-align: center;
+    color: var(--color-tenue, #6b7280);
+    background: #fff;
+    border: 1px dashed var(--color-linea, #e5e7eb);
+    border-radius: var(--radio, 12px);
+}
+

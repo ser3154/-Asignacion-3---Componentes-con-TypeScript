@@ -4,17 +4,30 @@ export interface Producto {
   precio: number;
   categoria: string;
   imagen: string;
-  existencia: number;
+  existencia: number; 
 }
 
-export interface DetalleAgregar {
+export interface DetalleAgregar{
   id: string;
   nombre: string;
   precio: number;
+  cantidad: number;
+}
+
+export interface Columna{
+  clave: string;
+  titulo: string;
+}
+
+export type Fila = Record<string, unknown>;
+
+export interface DetalleCambio{
+  valor: number;
 }
 
 declare global {
   interface HTMLElementEventMap {
     agregar: CustomEvent<DetalleAgregar>;
+    cambio: CustomEvent<DetalleCambio>;
   }
 }

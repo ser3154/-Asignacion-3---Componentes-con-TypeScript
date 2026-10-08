@@ -58,6 +58,10 @@ h3 {
   font-weight: 600;
 }
 
-boton-app {
+.acciones {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
   margin-top: auto;
 }

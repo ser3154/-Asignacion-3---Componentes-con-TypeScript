@@ -1,0 +1,42 @@
+:host{
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+button{
+    width: 32px;
+    height: 32px;
+    border: 2px solid var(--color-azul, #0066cc);
+    border-radius: 50%;
+    background: #fff;
+    color: var(--color-azul, #0066cc);
+    font: inherit;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1;
+    cursor: pointer;
+}
+
+button:hover:not(:disabled){
+    background: var(--color-azul, #0066cc);
+    color: #fff;
+}
+
+button:focus-visible{
+    outline: 3px solid var(--color-cian, #00aeef);
+    outline-offset: 2px;
+}
+
+button:disabled{
+    border-color: var(--color-linea, #e5e7eb);
+    color: var(--color-tenue, #6b7280);
+    cursor: not-allowed;
+}
+
+.valor{
+    min-width: 28px;
+    text-align: center;
+    font-weight: 700;
+    color: var(--color-tinta, #111827)
+}

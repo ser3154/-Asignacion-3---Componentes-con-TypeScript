@@ -1,5 +1,7 @@
 import './boton-app';
 import './tarjeta-producto';
+import './tabla-generica';
+import type { TablaGenerica } from './tabla-generica';
 import type { Producto } from './tipos';
 
 const productos: Producto[] = [
@@ -20,9 +22,36 @@ const productos: Producto[] = [
 const rejilla = document.querySelector<HTMLElement>('#rejilla')!;
 const cuenta = document.querySelector<HTMLElement>('#cuenta')!;
 const vaciar = document.querySelector<HTMLElement>('#vaciar')!;
+const tabla = document.querySelector<TablaGenerica>('#tabla-carrito')!;
 
-let total = 0;
-const pintarCuenta = () => { cuenta.textContent = String(total); };
+const pesos = new Intl.NumberFormat('es-MX', { style: 'currency', currency: 'MXN' });
+
+interface ItemCarrito {
+  id: string;
+  producto: string;
+  precio: number;
+  cantidad: number;
+}
+
+const carrito = new Map<string, ItemCarrito>();
+
+tabla.columnas = [
+  { clave: 'producto', titulo: 'Producto' },
+  { clave: 'precio', titulo: 'Precio' },
+  { clave: 'cantidad', titulo: 'Cantidad' },
+];
+
+const pintarCarrito = () => {
+  const items = [...carrito.values()];
+
+  cuenta.textContent = String(items.reduce((suma, i) => suma + i.cantidad, 0));
+
+  tabla.filas = items.map((i) => ({
+    producto: i.producto,
+    precio: pesos.format(i.precio),
+    cantidad: i.cantidad,
+  }));
+};
 
 for (const p of productos) {
   const tarjeta = document.createElement('tarjeta-producto');
@@ -36,12 +65,26 @@ for (const p of productos) {
 
 // Un solo listener en el contenedor
 rejilla.addEventListener('agregar', (e) => {
-  console.log('Agregado:', e.detail.id, e.detail.nombre, e.detail.precio);
-  total++;
-  pintarCuenta();
+  const { id, nombre, precio, cantidad } = e.detail;
+  const existente = carrito.get(id);
+
+  if (existente) {
+    existente.cantidad += cantidad;
+  } else {
+    carrito.set(id, { id, producto: nombre, precio, cantidad });
+  }
+
+  pintarCarrito();
+});
+
+// Opcional: el contador avisa cada cambio (el evento sale del Shadow DOM)
+rejilla.addEventListener('cambio', (e) => {
+  console.log('Nueva cantidad:', e.detail.valor);
 });
 
 vaciar.addEventListener('click', () => {
-  total = 0;
-  pintarCuenta();
+  carrito.clear();
+  pintarCarrito();
 });
+
+pintarCarrito(); 
